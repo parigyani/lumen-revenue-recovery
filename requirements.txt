@@ -1,5 +1,6 @@
 google-genai
 streamlit
+pandas
 razorpay
 python-dotenv
 filelock

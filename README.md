@@ -5,7 +5,7 @@
 An intelligent revenue recovery engine that uses AI exclusively for diagnosing the reason behind cart abandonment, while strictly relying on deterministic Python logic for all execution, routing, and decision-making. 
 
 ## Architecture
-- `agent.py`: Interfaces with the Gemini API to classify checkouts and implements rate-limit backoff.
+- `agent.py`: Interfaces with the Gemini API to classify checkouts and implements rate limit backoff.
 - `app.py`: Streamlit dashboard offering a live demo, batch report viewer, and audit trail.
 - `audit.py`: Handles immutable logging of all system actions and decisions to `audit_log.json`.
 - `batch_runner.py`: Executes the recovery pipeline across all checkouts and generates `batch_report.json`.
@@ -16,7 +16,7 @@ An intelligent revenue recovery engine that uses AI exclusively for diagnosing t
 ## What's Real vs Simulated
 *   **Real**: 
     *   AI diagnosis and classification with guardrails (Real API calls via Gemini; model configurable via `GEMINI_MODEL` in `.env`; verified batch run used `gemini-3.6-flash` after `gemini-2.5-flash` and `gemini-3.5-flash` quotas were exhausted on the same project).
-    *   Eligibility gating and the critical "live re-check".
+    *   Eligibility gating and the critical "live recheck".
     *   Stopping rules (max attempts, cooldowns).
     *   Audit trail generation.
     *   Integration with Razorpay SDK (if credentials provided).
@@ -31,22 +31,22 @@ An intelligent revenue recovery engine that uses AI exclusively for diagnosing t
 4. `streamlit run app.py`
 
 ## Testing & Verification
-*   `test_double_recovery.py`: Sequential stale-state guard testing.
-*   `test_concurrent_recovery.py`: True multi-threaded concurrent execution guard using `FileLock`.
-*   `scripts/test_idempotency.py`: Batch idempotency / double-run safety.
-*   `scripts/test_malformed_output.py`: Malformed AI-output resilience across 7 edge cases.
-*   `scripts/score_accuracy.py`: Ground-truth classification accuracy scoring.
+*   `test_double_recovery.py`: Sequential stale to state guard testing.
+*   `test_concurrent_recovery.py`: True multithreaded concurrent execution guard using `FileLock`.
+*   `scripts/test_idempotency.py`: Batch idempotency / doublerun safety.
+*   `scripts/test_malformed_output.py`: Malformed AI output resilience across 7 edge cases.
+*   `scripts/score_accuracy.py`: Ground truth classification accuracy scoring.
 
-## Why the Stale-State Guard Matters
+## Why the Stale to State Guard Matters
 If a customer pays elsewhere while the AI is diagnosing their case, sending a late payment link damages brand trust. We purposefully seed `already_completed_elsewhere=true` cases and test it using two scripts:
-1. `python3 test_double_recovery.py`: Tests sequential stale-state guarding.
-2. `python3 test_concurrent_recovery.py`: Tests true multi-threaded concurrency using `FileLock`.
+1. `python3 test_double_recovery.py`: Tests sequential stale to state guarding.
+2. `python3 test_concurrent_recovery.py`: Tests true multithreaded concurrency using `FileLock`.
 
 ## Known Limitations
-*   Google's free-tier quota (~20 requests/day) applies per model per project — different Gemini model variants (e.g. 2.5-flash, 3.5-flash, 3.6-flash) have independent quotas. Due to this hard constraint, running a full 60-record batch requires a paid tier for 100% AI coverage, or else it falls back to the deterministic baseline rule-set.
-*   JSON-file storage has no real concurrent write safety at scale (though `filelock` mitigates this for testing).
-*   Classification accuracy was validated against a hand-labeled ground-truth set: baseline rule-based classifier achieves ~83-85% accuracy, with a consistent, explainable error pattern (misclassifying ambiguous cases as price_hesitation instead of correctly flagging them as unknown/escalate). See `scripts/score_accuracy.py`.
-*   Message dispatch and payment completion outcomes are mathematically simulated, meaning recovery numbers are runtime-dependent.
+*   Google's free tier quota (~20 requests/day) applies per model per project — different Gemini model variants (e.g. 2.5-flash, 3.5-flash, 3.6-flash) have independent quotas. Due to this hard constraint, running a full 60 record batch requires a paid tier for 100% AI coverage, or else it falls back to the deterministic baseline rule set.
+*   JSON file storage has no real concurrent write safety at scale (though `filelock` mitigates this for testing).
+*   Classification accuracy was validated against a hand labeled ground truth set: baseline rule based classifier achieves ~83-85% accuracy, with a consistent, explainable error pattern (misclassifying ambiguous cases as price_hesitation instead of correctly flagging them as unknown/escalate). See `scripts/score_accuracy.py`.
+*   Message dispatch and payment completion outcomes are mathematically simulated, meaning recovery numbers are runtime dependent.
 
 ## Latest Batch Run Results
 *   **AI Calls Succeeded**: 5 real Gemini 3.6 Flash calls (Token usage: 1,669 input / 322 output, Cost: ₹0.0184).
@@ -56,7 +56,7 @@ If a customer pays elsewhere while the AI is diagnosing their case, sending a la
 *   **Recovered Value**: ₹65,756.11 (Recovery Rate: 23.33%)
 *   **Escalated to Human**: 8 checkouts
 
-Run `python3 batch_runner.py` to re-generate metrics — see `batch_report.json` and `batch_report_VERIFIED_REAL.json`.
+Run `python3 batch_runner.py` to regenerate metrics — see `batch_report.json` and `batch_report_VERIFIED_REAL.json`.
 
 ## Architecture Extension: B2B Receivables
-This extension validates that the core diagnose→execute→audit architecture seamlessly generalizes beyond abandoned checkouts to the brief's "overdue receivables" and "promise-to-pay tracker" directions. It reuses the exact same PII-stripping pattern (`business_id` omitted), confidence-threshold guardrails (< 0.55 escalates to human), FileLock concurrency safety (`receivables.json.lock`), and append-only audit trail logging. The receivables scenario adds a domain-specific stopping rule: automatically halting automated contacts and escalating to human review if 2+ broken promises are recorded in an invoice's history.
+This extension validates that the core diagnose→execute→audit architecture seamlessly generalizes beyond abandoned checkouts to the brief's "overdue receivables" and "promise to pay tracker" directions. It reuses the exact same PII stripping pattern (`business_id` omitted), confidence threshold guardrails (< 0.55 escalates to human), FileLock concurrency safety (`receivables.json.lock`), and append only audit trail logging. The receivables scenario adds a domain specific stopping rule: automatically halting automated contacts and escalating to human review if 2+ broken promises are recorded in an invoice's history.

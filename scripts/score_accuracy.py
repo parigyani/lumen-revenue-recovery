@@ -57,10 +57,10 @@ def score():
         print("=== CHECKOUT ACCURACY SCORING ===")
         print(f"Total records evaluated: {total_records}")
         print(f"Baseline Accuracy: {baseline_acc:.1f}% ({baseline_correct}/{total_records})")
-        if ai_total > 0:
+        if ai_total >= 5:
             print(f"AI Accuracy: {(ai_correct / ai_total) * 100:.1f}% (n={ai_total} real AI-diagnosed records)")
         else:
-            print("AI Accuracy: N/A (0 real AI-diagnosed records currently cached — quota exhausted for today, see batch_report_VERIFIED_REAL.json for the last verified real-AI batch run instead).")
+            print(f"AI Accuracy: N/A (only {ai_total} real AI-diagnosed record(s) — sample too small to be meaningful; see batch_report_VERIFIED_REAL.json for the last verified real-AI batch run).")
             
         print("\nBaseline Misclassifications:")
         for w in baseline_wrong_ids:
@@ -116,10 +116,10 @@ def score():
         print("\n=== RECEIVABLES ACCURACY SCORING ===")
         print(f"Total records evaluated: {rec_total}")
         print(f"Baseline Accuracy: {rec_baseline_acc:.1f}% ({rec_baseline_correct}/{rec_total})")
-        if rec_ai_total > 0:
+        if rec_ai_total >= 5:
             print(f"AI Accuracy: {(rec_ai_correct / rec_ai_total) * 100:.1f}% (n={rec_ai_total} real AI-diagnosed records)")
         else:
-            print("AI Accuracy: N/A (0 real AI-diagnosed records currently cached — quota exhausted for today, see batch_report_VERIFIED_REAL.json for the last verified real-AI batch run instead).")
+            print(f"AI Accuracy: N/A (only {rec_ai_total} real AI-diagnosed record(s) — sample too small to be meaningful; see batch_report_VERIFIED_REAL.json for the last verified real-AI batch run).")
             
         print("\nBaseline Misclassifications:")
         for w in rec_baseline_wrong:

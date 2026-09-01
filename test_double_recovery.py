@@ -21,7 +21,7 @@ def test_race_condition():
     print(f"1. Target selected: {cid}")
     
     print("2. Calling AI for diagnosis...")
-    diagnosis = diagnose(target)
+    diagnosis = diagnose(target, force_fallback=True)
     print(f"   AI Recommendation: {diagnosis.get('recommended_intervention')}")
     
     print(f"3. Simulating external mutation (customer pays on support call) in checkouts.json...")

@@ -71,9 +71,10 @@ with tab2:
         st.subheader("Headline Performance Metrics")
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Total At-Risk", f"₹{report.get('total_at_risk_value', 0):,}")
-        c2.metric("Recovered Value", f"₹{report.get('recovered_value', 0):,}")
-        c3.metric("Recovery Rate", f"{report.get('recovery_rate_pct', 0)}%")
+        c2.metric("Recovered", f"₹{report.get('recovered_value', 0):,} ({report.get('recovered_count', 0)})")
+        c3.metric("Contacted, Awaiting Response", report.get('contacted_not_yet_recovered', 0))
         c4.metric("Escalated to Human", report.get('escalated_to_human', 0))
+        st.caption("Recovery rate reflects only fully-completed synthetic transactions in this run; 'Contacted' means an intervention was sent successfully.")
         
         st.divider()
         st.subheader("AI Diagnosis & Quota Governance")

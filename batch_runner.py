@@ -39,6 +39,7 @@ def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18)
         "escalated_value_pending": 0,
         "recovery_attempts_by_type": {},
         "recovered_count": 0,
+        "contacted_not_yet_recovered": 0,
         "recovered_value": 0,
         "per_checkout_results": []
     }
@@ -106,6 +107,8 @@ def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18)
             if status == "recovered":
                 report["recovered_count"] += 1
                 report["recovered_value"] += recovered_amt
+            elif status == "contacted":
+                report["contacted_not_yet_recovered"] += 1
                 
         report["per_checkout_results"].append({
             "checkout_id": c["checkout_id"],
@@ -188,8 +191,7 @@ def run_batch_n_times(n=5):
     print(f"ROI: {primary_report.get('recovered_value_to_ai_cost_ratio')}")
     return primary_report
 
-if __name__ == "__main__":
-    run_batch_n_times(5)
+
 
 from agent import diagnose_receivable
 from recovery import execute_receivable_recovery
@@ -252,3 +254,8 @@ def run_receivables_batch(force_fallback=True):
         json.dump(report, f, indent=2)
         
     return report
+
+
+if __name__ == "__main__":
+    run_batch_n_times(5)
+    run_receivables_batch(force_fallback=True)

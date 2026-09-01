@@ -31,7 +31,7 @@ def test_concurrent_recovery():
     print(f"Target selected: {cid}")
     
     print("Pre-fetching AI diagnosis...")
-    diagnosis = diagnose(target)
+    diagnosis = diagnose(target, force_fallback=True)
     
     results = {}
     

@@ -36,6 +36,7 @@ An intelligent revenue recovery engine that uses AI exclusively for diagnosing t
 *   `scripts/test_idempotency.py`: Batch idempotency / double-run safety.
 *   `scripts/test_malformed_output.py`: Malformed AI-output resilience across 7 edge cases.
 *   `scripts/score_accuracy.py`: Ground-truth classification accuracy scoring.
+*   `scripts/stress_test.py`: Sequential and concurrent scale/stress testing.
 
 ## Why the Stale-State Guard Matters
 If a customer pays elsewhere while the AI is diagnosing their case, sending a late payment link damages brand trust. We purposefully seed `already_completed_elsewhere=true` cases and test it using two scripts:

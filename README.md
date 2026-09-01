@@ -15,7 +15,7 @@ An intelligent revenue recovery engine that uses AI exclusively for diagnosing t
 
 ## What's Real vs Simulated
 *   **Real**: 
-    *   AI diagnosis and classification with guardrails (Real API Calls via `gemini-2.5-flash`).
+    *   AI diagnosis and classification with guardrails (Real API calls via Gemini; model configurable via `GEMINI_MODEL` in `.env`; verified batch run used `gemini-3.6-flash` after `gemini-2.5-flash` and `gemini-3.5-flash` quotas were exhausted on the same project).
     *   Eligibility gating and the critical "live re-check".
     *   Stopping rules (max attempts, cooldowns).
     *   Audit trail generation.
@@ -30,15 +30,22 @@ An intelligent revenue recovery engine that uses AI exclusively for diagnosing t
 3. `python3 batch_runner.py`
 4. `streamlit run app.py`
 
+## Testing & Verification
+*   `test_double_recovery.py`: Sequential stale-state guard testing.
+*   `test_concurrent_recovery.py`: True multi-threaded concurrent execution guard using `FileLock`.
+*   `scripts/test_idempotency.py`: Batch idempotency / double-run safety.
+*   `scripts/test_malformed_output.py`: Malformed AI-output resilience across 7 edge cases.
+*   `scripts/score_accuracy.py`: Ground-truth classification accuracy scoring.
+
 ## Why the Stale-State Guard Matters
 If a customer pays elsewhere while the AI is diagnosing their case, sending a late payment link damages brand trust. We purposefully seed `already_completed_elsewhere=true` cases and test it using two scripts:
 1. `python3 test_double_recovery.py`: Tests sequential stale-state guarding.
 2. `python3 test_concurrent_recovery.py`: Tests true multi-threaded concurrency using `FileLock`.
 
 ## Known Limitations
-*   Gemini free-tier quota limits real AI diagnosis to exactly 20 calls/day per project. Due to this hard constraint, running a full 60-record batch requires a paid tier for 100% AI coverage, or else it falls back to the deterministic baseline rule-set.
+*   Google's free-tier quota (~20 requests/day) applies per model per project — different Gemini model variants (e.g. 2.5-flash, 3.5-flash, 3.6-flash) have independent quotas. Due to this hard constraint, running a full 60-record batch requires a paid tier for 100% AI coverage, or else it falls back to the deterministic baseline rule-set.
 *   JSON-file storage has no real concurrent write safety at scale (though `filelock` mitigates this for testing).
-*   Classification accuracy has no ground-truth validation set.
+*   Classification accuracy was validated against a hand-labeled ground-truth set: baseline rule-based classifier achieves ~83-85% accuracy, with a consistent, explainable error pattern (misclassifying ambiguous cases as price_hesitation instead of correctly flagging them as unknown/escalate). See `scripts/score_accuracy.py`.
 *   Message dispatch and payment completion outcomes are mathematically simulated, meaning recovery numbers are runtime-dependent.
 
 ## Latest Batch Run Results

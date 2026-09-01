@@ -1,0 +1,5 @@
+google-genai
+streamlit
+razorpay
+python-dotenv
+filelock

@@ -1,0 +1,757 @@
+{
+  "total_checkouts": 60,
+  "total_at_risk_value": 272378.23,
+  "eligible_for_recovery": 60,
+  "skipped_already_completed": 0,
+  "skipped_stopping_rules": 57,
+  "escalated_to_human": 0,
+  "escalated_value_pending": 0,
+  "recovery_attempts_by_type": {
+    "discount_code": 2,
+    "payment_retry_link": 1
+  },
+  "recovered_count": 1,
+  "recovered_value": 2680.14,
+  "per_checkout_results": [
+    {
+      "checkout_id": "chk_0001",
+      "cart_value": 7675.5,
+      "diagnosis": "price_hesitation",
+      "intervention": "discount_code",
+      "status": "contacted",
+      "recovered_amount": 0,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0002",
+      "cart_value": 2680.14,
+      "diagnosis": "payment_failed",
+      "intervention": "payment_retry_link",
+      "status": "recovered",
+      "recovered_amount": 2680.14,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0003",
+      "cart_value": 3821.12,
+      "diagnosis": "price_hesitation",
+      "intervention": "discount_code",
+      "status": "contacted",
+      "recovered_amount": 0,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0004",
+      "cart_value": 7547.69,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0005",
+      "cart_value": 971.9,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0006",
+      "cart_value": 4674.12,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0007",
+      "cart_value": 2083.53,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "none"
+    },
+    {
+      "checkout_id": "chk_0008",
+      "cart_value": 7925.11,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0009",
+      "cart_value": 4430.08,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0010",
+      "cart_value": 6457.96,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0011",
+      "cart_value": 1247.38,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0012",
+      "cart_value": 5215.16,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0013",
+      "cart_value": 2867.01,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0014",
+      "cart_value": 6041.84,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0015",
+      "cart_value": 4147.07,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0016",
+      "cart_value": 6189.93,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0017",
+      "cart_value": 7320.16,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0018",
+      "cart_value": 2357.64,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0019",
+      "cart_value": 7893.32,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0020",
+      "cart_value": 7706.78,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0021",
+      "cart_value": 854.16,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0022",
+      "cart_value": 6731.47,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0023",
+      "cart_value": 7009.51,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0024",
+      "cart_value": 5188.96,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0025",
+      "cart_value": 4829.71,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0026",
+      "cart_value": 3165.42,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0027",
+      "cart_value": 2416.66,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0028",
+      "cart_value": 4656.86,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0029",
+      "cart_value": 3568.76,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0030",
+      "cart_value": 3775.11,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0031",
+      "cart_value": 5127.78,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0032",
+      "cart_value": 6512.85,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0033",
+      "cart_value": 3990.53,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0034",
+      "cart_value": 5975.94,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0035",
+      "cart_value": 4147.4,
+      "diagnosis": "unknown",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0036",
+      "cart_value": 3220.72,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0037",
+      "cart_value": 7832.74,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0038",
+      "cart_value": 4604.78,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0039",
+      "cart_value": 4495.68,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0040",
+      "cart_value": 4412.67,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0041",
+      "cart_value": 2355.67,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0042",
+      "cart_value": 5716.33,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0043",
+      "cart_value": 7232.26,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0044",
+      "cart_value": 3627.75,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0045",
+      "cart_value": 3818.84,
+      "diagnosis": "unknown",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0046",
+      "cart_value": 7173.68,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0047",
+      "cart_value": 3842.79,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0048",
+      "cart_value": 1296.87,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0049",
+      "cart_value": 5428.61,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0050",
+      "cart_value": 481.74,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0051",
+      "cart_value": 3130.12,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0052",
+      "cart_value": 1268.37,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0053",
+      "cart_value": 1500.57,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0054",
+      "cart_value": 6218.95,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0055",
+      "cart_value": 7374.88,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0056",
+      "cart_value": 3724.67,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0057",
+      "cart_value": 1151.01,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0058",
+      "cart_value": 5440.51,
+      "diagnosis": "payment_failed",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0059",
+      "cart_value": 6117.72,
+      "diagnosis": "price_hesitation",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    },
+    {
+      "checkout_id": "chk_0060",
+      "cart_value": 3705.74,
+      "diagnosis": "distracted",
+      "intervention": "None",
+      "status": "skipped",
+      "recovered_amount": 0,
+      "fallback_reason": "quota_reserved"
+    }
+  ],
+  "baseline_agreements": 29,
+  "cases_where_ai_disagreed_with_baseline": [
+    {
+      "checkout_id": "chk_0004",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=3.4; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0008",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=partial & time=45.7; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0009",
+      "reason_ai": "distracted",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=partial & time=37.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0011",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "unknown",
+      "explanation": "Baseline saw payment=none & time=20.9; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0012",
+      "reason_ai": "distracted",
+      "reason_baseline": "payment_failed",
+      "explanation": "Baseline saw payment=failed & time=8.0; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0013",
+      "reason_ai": "distracted",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=partial & time=30.1; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0014",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=1.2; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0015",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "payment_failed",
+      "explanation": "Baseline saw payment=failed & time=21.4; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0017",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=none & time=54.1; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0022",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=0.8; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0023",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=3.1; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0024",
+      "reason_ai": "distracted",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=partial & time=44.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0025",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=none & time=39.1; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0026",
+      "reason_ai": "distracted",
+      "reason_baseline": "payment_failed",
+      "explanation": "Baseline saw payment=failed & time=8.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0029",
+      "reason_ai": "distracted",
+      "reason_baseline": "payment_failed",
+      "explanation": "Baseline saw payment=failed & time=8.2; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0031",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=0.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0033",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=0.6; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0034",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "unknown",
+      "explanation": "Baseline saw payment=none & time=16.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0035",
+      "reason_ai": "unknown",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=none & time=50.0; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0037",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "unknown",
+      "explanation": "Baseline saw payment=none & time=15.6; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0038",
+      "reason_ai": "distracted",
+      "reason_baseline": "unknown",
+      "explanation": "Baseline saw payment=none & time=12.3; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0040",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=none & time=64.9; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0043",
+      "reason_ai": "distracted",
+      "reason_baseline": "payment_failed",
+      "explanation": "Baseline saw payment=failed & time=13.0; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0044",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=2.1; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0045",
+      "reason_ai": "unknown",
+      "reason_baseline": "payment_failed",
+      "explanation": "Baseline saw payment=failed & time=13.6; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0052",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=3.2; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0054",
+      "reason_ai": "distracted",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=partial & time=35.7; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0055",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "distracted",
+      "explanation": "Baseline saw payment=none & time=2.6; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0057",
+      "reason_ai": "price_hesitation",
+      "reason_baseline": "unknown",
+      "explanation": "Baseline saw payment=partial & time=20.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0058",
+      "reason_ai": "payment_failed",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=none & time=30.5; AI likely weighed cart value or customer tier differently."
+    },
+    {
+      "checkout_id": "chk_0060",
+      "reason_ai": "distracted",
+      "reason_baseline": "price_hesitation",
+      "explanation": "Baseline saw payment=none & time=41.0; AI likely weighed cart value or customer tier differently."
+    }
+  ],
+  "total_input_tokens": 2343,
+  "total_output_tokens": 441,
+  "ai_calls_succeeded": 7,
+  "ai_calls_fell_back": 53,
+  "real_ai_agreements": 6,
+  "recovery_rate_pct": 1.67,
+  "real_ai_agreement_pct": 85.71,
+  "fallback_rate_pct": 88.33,
+  "baseline_vs_ai_agreement_pct": 48.33,
+  "total_ai_diagnosis_cost_inr": 0.0256,
+  "recovered_value_to_ai_cost_ratio": "104692:1"
+}

@@ -1,0 +1,239 @@
+[
+  {
+    "invoice_id": "inv_0001",
+    "business_id": "biz_011",
+    "business_type": "SMB",
+    "amount_due": 39466.41,
+    "days_overdue": 33.1,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [],
+    "last_contact_at": "2026-09-01T04:18:01.505982",
+    "status": "reminded"
+  },
+  {
+    "invoice_id": "inv_0002",
+    "business_id": "biz_057",
+    "business_type": "SMB",
+    "amount_due": 58605.09,
+    "days_overdue": 68.1,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.507664",
+    "status": "reminded"
+  },
+  {
+    "invoice_id": "inv_0003",
+    "business_id": "biz_089",
+    "business_type": "enterprise",
+    "amount_due": 18420.94,
+    "days_overdue": 59.1,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-07-15",
+        "kept": false
+      },
+      {
+        "promised_date": "2026-08-01",
+        "kept": false
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.509232",
+    "status": "escalated_human"
+  },
+  {
+    "invoice_id": "inv_0004",
+    "business_id": "biz_085",
+    "business_type": "enterprise",
+    "amount_due": 142249.54,
+    "days_overdue": 53.1,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-05",
+        "kept": false
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.511183",
+    "status": "promise_requested"
+  },
+  {
+    "invoice_id": "inv_0005",
+    "business_id": "biz_086",
+    "business_type": "SMB",
+    "amount_due": 144924.14,
+    "days_overdue": 24.6,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [],
+    "last_contact_at": "2026-09-01T04:18:01.512699",
+    "status": "escalated_collections"
+  },
+  {
+    "invoice_id": "inv_0006",
+    "business_id": "biz_089",
+    "business_type": "enterprise",
+    "amount_due": 74483.56,
+    "days_overdue": 14.0,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.514132",
+    "status": "escalated_collections"
+  },
+  {
+    "invoice_id": "inv_0007",
+    "business_id": "biz_068",
+    "business_type": "enterprise",
+    "amount_due": 97951.42,
+    "days_overdue": 2.6,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-07-15",
+        "kept": false
+      },
+      {
+        "promised_date": "2026-08-01",
+        "kept": false
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.516026",
+    "status": "escalated_human"
+  },
+  {
+    "invoice_id": "inv_0008",
+    "business_id": "biz_079",
+    "business_type": "enterprise",
+    "amount_due": 41053.22,
+    "days_overdue": 73.7,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.517487",
+    "status": "promise_requested"
+  },
+  {
+    "invoice_id": "inv_0009",
+    "business_id": "biz_076",
+    "business_type": "SMB",
+    "amount_due": 90655.75,
+    "days_overdue": 57.2,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.518829",
+    "status": "escalated_collections"
+  },
+  {
+    "invoice_id": "inv_0010",
+    "business_id": "biz_018",
+    "business_type": "SMB",
+    "amount_due": 145825.77,
+    "days_overdue": 15.7,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.519950",
+    "status": "reminded"
+  },
+  {
+    "invoice_id": "inv_0011",
+    "business_id": "biz_088",
+    "business_type": "SMB",
+    "amount_due": 15596.76,
+    "days_overdue": 16.8,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.521050",
+    "status": "reminded"
+  },
+  {
+    "invoice_id": "inv_0012",
+    "business_id": "biz_089",
+    "business_type": "enterprise",
+    "amount_due": 12040.12,
+    "days_overdue": 73.3,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-07-15",
+        "kept": false
+      },
+      {
+        "promised_date": "2026-08-01",
+        "kept": false
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.522267",
+    "status": "escalated_human"
+  },
+  {
+    "invoice_id": "inv_0013",
+    "business_id": "biz_066",
+    "business_type": "enterprise",
+    "amount_due": 13481.76,
+    "days_overdue": 72.8,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.523350",
+    "status": "escalated_collections"
+  },
+  {
+    "invoice_id": "inv_0014",
+    "business_id": "biz_027",
+    "business_type": "enterprise",
+    "amount_due": 94032.25,
+    "days_overdue": 36.5,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [],
+    "last_contact_at": "2026-09-01T04:18:01.524430",
+    "status": "escalated_collections"
+  },
+  {
+    "invoice_id": "inv_0015",
+    "business_id": "biz_092",
+    "business_type": "enterprise",
+    "amount_due": 9763.91,
+    "days_overdue": 3.5,
+    "previous_contact_attempts": 1,
+    "promise_to_pay_history": [
+      {
+        "promised_date": "2026-08-10",
+        "kept": true
+      }
+    ],
+    "last_contact_at": "2026-09-01T04:18:01.525483",
+    "status": "escalated_collections"
+  }
+]

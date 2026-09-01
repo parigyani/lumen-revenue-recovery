@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+*.lock
+data/checkouts.json
+data/diagnosis_cache.json
+data/receivables_diagnosis_cache.json

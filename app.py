@@ -13,6 +13,41 @@ st.set_page_config(page_title="Lumen Revenue Recovery", layout="wide")
 st.title("AI Revenue Recovery Agent — Lumen Skincare")
 st.markdown("*Track 03: Autonomous Revenue Recovery & Collections Engine*")
 
+from google import genai
+
+# Sidebar API Override Configuration
+with st.sidebar.expander("⚙️ API Configuration", expanded=False):
+    st.text_input("Gemini API Key (session override)", type="password", placeholder="Leave blank to use .env default", key="override_api_key_input")
+    env_default_model = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+    st.text_input("Gemini Model Variant", value=env_default_model, key="override_model_input")
+    
+    if st.button("Test Connection"):
+        test_key = st.session_state.get("override_api_key_input", "").strip() or os.getenv("GEMINI_API_KEY")
+        test_model = st.session_state.get("override_model_input", "").strip() or env_default_model
+        
+        if not test_key:
+            st.error("❌ No API key available in session override or .env")
+        else:
+            try:
+                test_client = genai.Client(api_key=test_key)
+                test_res = test_client.models.generate_content(model=test_model, contents="say OK")
+                if test_res.text:
+                    st.success("✅ Key is valid, quota available")
+                else:
+                    st.error("❌ Empty response from model")
+            except Exception as e:
+                st.error(f"❌ {str(e)}")
+
+# Display active key source status in sidebar
+active_key_override = st.session_state.get("override_api_key_input", "").strip()
+active_model_disp = st.session_state.get("override_model_input", "").strip() or os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+if active_key_override:
+    st.sidebar.caption(f"🔑 **Key Source:** Session Override | **Model:** `{active_model_disp}`")
+else:
+    st.sidebar.caption(f"🔑 **Key Source:** `.env` Default | **Model:** `{active_model_disp}`")
+
+
+
 tab2, tab1, tab3, tab4 = st.tabs(["📊 Batch Report", "🔴 Live Demo", "📜 Audit Trail", "🏢 Receivables Extension"])
 
 # ------------------ TAB 1: BATCH REPORT ------------------
@@ -94,7 +129,9 @@ with tab1:
         with col_diag:
             if st.button("Run AI Diagnosis"):
                 with st.spinner("Diagnosing with Gemini..."):
-                    st.session_state["diagnosis"] = diagnose(c_data)
+                    k_ovr = st.session_state.get("override_api_key_input", "").strip() or None
+                m_ovr = st.session_state.get("override_model_input", "").strip() or None
+                st.session_state["diagnosis"] = diagnose(c_data, api_key=k_ovr, model_name=m_ovr)
                     
             if "diagnosis" in st.session_state:
                 diag = st.session_state["diagnosis"]

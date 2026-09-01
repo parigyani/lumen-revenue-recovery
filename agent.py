@@ -40,7 +40,7 @@ def classify_baseline(checkout):
     else:
         return "unknown"
 
-def diagnose(checkout, force_fallback=False):
+def diagnose(checkout, force_fallback=False, api_key=None, model_name=None):
     checkout_id = checkout["checkout_id"]
     cache = load_cache()
     
@@ -73,13 +73,14 @@ def diagnose(checkout, force_fallback=False):
         save_cache(cache)
         return fallback
 
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    active_api_key = api_key or os.getenv("GEMINI_API_KEY")
+    if not active_api_key:
         fallback['fallback_reason'] = 'api_error'
-        print("Warning: GEMINI_API_KEY not found in .env, returning fallback.")
+        print("Warning: GEMINI_API_KEY not found in .env or override, returning fallback.")
         return fallback
 
-    client = genai.Client(api_key=api_key)
+    active_model_name = model_name or os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    client = genai.Client(api_key=active_api_key)
     
     safe_data = {
         "cart_value": checkout.get("cart_value"),
@@ -110,13 +111,13 @@ Schema:
 }}
 """
     
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    
     
     retries = 5
     for attempt in range(retries):
         try:
             response = client.models.generate_content(
-                model=model_name,
+                model=active_model_name,
                 contents=prompt,
             )
 
@@ -198,7 +199,7 @@ def classify_receivable_baseline(invoice):
     else:
         return "awaiting_approval"
 
-def diagnose_receivable(invoice, force_fallback=True):
+def diagnose_receivable(invoice, force_fallback=True, api_key=None, model_name=None):
     """Diagnoses B2B receivables with PII stripping, schema validation, and fallback logic."""
     invoice_id = invoice["invoice_id"]
     cache = load_receivables_cache()
@@ -231,12 +232,13 @@ def diagnose_receivable(invoice, force_fallback=True):
         save_receivables_cache(cache)
         return fallback
 
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    active_api_key = api_key or os.getenv("GEMINI_API_KEY")
+    if not active_api_key:
         fallback['fallback_reason'] = 'api_error'
         return fallback
 
-    client = genai.Client(api_key=api_key)
+    active_model_name = model_name or os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    client = genai.Client(api_key=active_api_key)
     
     # Strip business_id PII
     safe_data = {
@@ -265,13 +267,13 @@ Return ONLY STRICT JSON. Schema:
 }}
 """
     
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    
     
     retries = 5
     for attempt in range(retries):
         try:
             response = client.models.generate_content(
-                model=model_name,
+                model=active_model_name,
                 contents=prompt,
             )
 

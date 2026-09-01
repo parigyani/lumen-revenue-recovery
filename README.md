@@ -60,3 +60,5 @@ Run `python3 batch_runner.py` to re-generate metrics — see `batch_report.json`
 
 ## Architecture Extension: B2B Receivables
 This extension validates that the core diagnose→execute→audit architecture seamlessly generalizes beyond abandoned checkouts to the brief's "overdue receivables" and "promise-to-pay tracker" directions. It reuses the exact same PII-stripping pattern (`business_id` omitted), confidence-threshold guardrails (< 0.55 escalates to human), FileLock concurrency safety (`receivables.json.lock`), and append-only audit trail logging. The receivables scenario adds a domain-specific stopping rule: automatically halting automated contacts and escalating to human review if 2+ broken promises are recorded in an invoice's history.
+
+Ground-truth accuracy evaluation (`scripts/score_accuracy.py`) demonstrates that the B2B receivables baseline classifier achieves 66.7% accuracy (10/15), exhibiting the same structural limitation as checkouts (inability to output `unknown` on ambiguous scenarios) alongside threshold misclassifications on early-stage disputes.

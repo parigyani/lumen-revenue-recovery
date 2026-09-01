@@ -1,3 +1,4 @@
+from filelock import FileLock
 import os
 import json
 import re
@@ -12,13 +13,18 @@ CACHE_FILE = os.path.join(os.path.dirname(__file__), "data", "diagnosis_cache.js
 
 def load_cache():
     if os.path.exists(CACHE_FILE):
-        with open(CACHE_FILE, "r") as f:
-            return json.load(f)
+        try:
+            with FileLock(CACHE_FILE + ".lock"):
+                with open(CACHE_FILE, "r") as f:
+                    return json.load(f)
+        except Exception:
+            return {}
     return {}
 
 def save_cache(cache):
-    with open(CACHE_FILE, "w") as f:
-        json.dump(cache, f, indent=2)
+    with FileLock(CACHE_FILE + ".lock"):
+        with open(CACHE_FILE, "w") as f:
+            json.dump(cache, f, indent=2)
 
 def classify_baseline(checkout):
     """Pure Python baseline classifier without LLM."""

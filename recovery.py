@@ -37,14 +37,15 @@ def generate_payment_link(checkout_id, amount, discount_pct=0):
     else:
         return f"https://rzp.io/l/simulated-{checkout_id}"
 
-def execute_recovery(checkout_id, diagnosis):
+def execute_recovery(checkout_id, diagnosis, checkouts_file=None):
     """
     Executes the deterministic recovery process based on the AI diagnosis.
     Returns a result dict.
     Wrapped entirely in a FileLock to prevent race conditions during read-modify-write.
     """
-    lock_file = os.path.join(os.path.dirname(__file__), "data", "checkouts.json.lock")
-    checkouts_file = os.path.join(os.path.dirname(__file__), "data", "checkouts.json")
+    if checkouts_file is None:
+        checkouts_file = os.path.join(os.path.dirname(__file__), "data", "checkouts.json")
+    lock_file = checkouts_file + ".lock" 
     
     with FileLock(lock_file):
         with open(checkouts_file, 'r') as f:
@@ -145,6 +146,8 @@ def execute_recovery(checkout_id, diagnosis):
         checkout.update(update_fields)
         with open(checkouts_file, 'w') as f:
             json.dump(checkouts, f, indent=2)
+            f.flush()
+            os.fsync(f.fileno())
         
         # 6. LOG TO AUDIT
         action_details = {

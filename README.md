@@ -48,6 +48,14 @@ If a customer pays elsewhere while the AI is diagnosing their case, sending a la
 *   Classification accuracy was validated against a hand-labeled ground-truth set: baseline rule-based classifier achieves ~83-85% accuracy, with a consistent, explainable error pattern (misclassifying ambiguous cases as price_hesitation instead of correctly flagging them as unknown/escalate). See `scripts/score_accuracy.py`. AI-vs-ground-truth accuracy could not be reliably measured in a single stable batch due to a dataset/cache ordering issue discovered during testing (see commit history) — the diagnosis cache must be generated in the same run as the dataset it scores against, not regenerated independently. This is now guarded against in batch_runner.py.
 *   Message dispatch and payment completion outcomes are mathematically simulated, meaning recovery numbers are runtime-dependent.
 
+### Scale Testing
+*   **Empirical Throughput**: Measured via `scripts/stress_test.py`:
+    *   100 records: 2.87s total wall-clock time (28.72ms/record, 26.75ms FileLock hold time, 64.2 KB dataset size).
+    *   500 records: 17.94s total wall-clock time (35.88ms/record, 34.69ms FileLock hold time, 321.8 KB dataset size).
+    *   1000 records: 55.15s total wall-clock time (55.15ms/record, 54.12ms FileLock hold time, 316.6 KB dataset size).
+*   **Concurrent Contention**: 10 worker threads processing 1000 records completed in 41.63s with zero data corruption. While multithreading speeds up CPU-bound diagnosis prep, global FileLock serialization means I/O-bound state mutations remain sequential.
+*   **Scale Limitation**: Beyond ~500–1000 records, the "read entire file, rewrite entire file" pattern under a global FileLock becomes bottlenecked by $O(N^2)$ cumulative I/O byte rewrites. Production deployment at higher scale requires a relational database (e.g., PostgreSQL) with row-level locking.
+
 ## Latest Batch Run Results
 *   **AI Calls Succeeded**: 5 real Gemini 3.6 Flash calls (Token usage: 1,669 input / 322 output, Cost: ₹0.0184).
 *   **Fallback Rate**: 55 / 60 checkouts (91.67% quota reserved).

@@ -12,6 +12,8 @@ def run_recovery_thread(thread_id, checkout_id, diagnosis, results):
 
 def test_concurrent_recovery():
     print("--- Running True Concurrent Recovery Stale-State Guard Test ---")
+    from data.generate_checkouts import generate
+    generate()
     checkouts = load_checkouts()
     target = None
     from checkouts import is_recoverable

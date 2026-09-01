@@ -45,7 +45,7 @@ If a customer pays elsewhere while the AI is diagnosing their case, sending a la
 ## Known Limitations
 *   Google's free-tier quota (~20 requests/day) applies per model per project — different Gemini model variants (e.g. 2.5-flash, 3.5-flash, 3.6-flash) have independent quotas. Due to this hard constraint, running a full 60-record batch requires a paid tier for 100% AI coverage, or else it falls back to the deterministic baseline rule-set.
 *   JSON-file storage has no real concurrent write safety at scale (though `filelock` mitigates this for testing).
-*   Classification accuracy was validated against a hand-labeled ground-truth set: baseline rule-based classifier achieves ~83-85% accuracy, with a consistent, explainable error pattern (misclassifying ambiguous cases as price_hesitation instead of correctly flagging them as unknown/escalate). See `scripts/score_accuracy.py`.
+*   Classification accuracy was validated against a hand-labeled ground-truth set: baseline rule-based classifier achieves ~83-85% accuracy, with a consistent, explainable error pattern (misclassifying ambiguous cases as price_hesitation instead of correctly flagging them as unknown/escalate). See `scripts/score_accuracy.py`. AI-vs-ground-truth accuracy could not be reliably measured in a single stable batch due to a dataset/cache ordering issue discovered during testing (see commit history) — the diagnosis cache must be generated in the same run as the dataset it scores against, not regenerated independently. This is now guarded against in batch_runner.py.
 *   Message dispatch and payment completion outcomes are mathematically simulated, meaning recovery numbers are runtime-dependent.
 
 ## Latest Batch Run Results

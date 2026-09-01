@@ -1,3 +1,23 @@
+def verify_cache_integrity():
+    cache_file = os.path.join(os.path.dirname(__file__), "data", "diagnosis_cache.json")
+    checkouts_file = os.path.join(os.path.dirname(__file__), "data", "checkouts.json")
+    
+    if os.path.exists(cache_file) and os.path.exists(checkouts_file):
+        try:
+            with open(cache_file, "r") as f:
+                cache = json.load(f)
+            with open(checkouts_file, "r") as f:
+                checkouts = {c["checkout_id"]: c for c in json.load(f)}
+                
+            for cid, diag in cache.items():
+                if not diag.get("is_fallback", True):
+                    if cid not in checkouts:
+                        print("WARNING: Diagnosis cache is stale — cached diagnoses do not match current checkout data. Wipe the cache before scoring accuracy.")
+                        return False
+        except Exception:
+            pass
+    return True
+
 import json
 import os
 import shutil
@@ -8,6 +28,7 @@ from recovery import execute_recovery
 REPORT_FILE = os.path.join(os.path.dirname(__file__), "batch_report.json")
 
 def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18):
+    verify_cache_integrity()
     report = {
         "total_checkouts": len(checkouts),
         "total_at_risk_value": 0,

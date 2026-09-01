@@ -60,7 +60,7 @@ def score():
         if ai_total > 0:
             print(f"AI Accuracy: {(ai_correct / ai_total) * 100:.1f}% (n={ai_total} real AI-diagnosed records)")
         else:
-            print("AI Accuracy: N/A (n=0 real AI-diagnosed records)")
+            print("AI Accuracy: N/A (0 real AI-diagnosed records currently cached — quota exhausted for today, see batch_report_VERIFIED_REAL.json for the last verified real-AI batch run instead).")
             
         print("\nBaseline Misclassifications:")
         for w in baseline_wrong_ids:
@@ -119,7 +119,7 @@ def score():
         if rec_ai_total > 0:
             print(f"AI Accuracy: {(rec_ai_correct / rec_ai_total) * 100:.1f}% (n={rec_ai_total} real AI-diagnosed records)")
         else:
-            print("AI Accuracy: N/A (n=0 real AI-diagnosed records)")
+            print("AI Accuracy: N/A (0 real AI-diagnosed records currently cached — quota exhausted for today, see batch_report_VERIFIED_REAL.json for the last verified real-AI batch run instead).")
             
         print("\nBaseline Misclassifications:")
         for w in rec_baseline_wrong:

@@ -10,32 +10,31 @@ from filelock import FileLock
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
-rzp_key_id = os.getenv("RAZORPAY_KEY_ID")
-rzp_secret = os.getenv("RAZORPAY_SECRET")
-if rzp_key_id and rzp_secret:
-    rzp_client = razorpay.Client(auth=(rzp_key_id, rzp_secret))
-else:
-    rzp_client = None
-
 def generate_payment_link(checkout_id, amount, discount_pct=0):
     final_amount = amount * (1 - discount_pct / 100.0)
     final_amount_paise = int(final_amount * 100)
     
-    if rzp_client:
+    key_id = os.getenv("RAZORPAY_KEY_ID")
+    secret = os.getenv("RAZORPAY_SECRET")
+    
+    if key_id and secret:
         try:
+            client = razorpay.Client(auth=(key_id, secret))
             link_data = {
                 "amount": final_amount_paise,
                 "currency": "INR",
                 "accept_partial": False,
-                "description": f"Recovery for {checkout_id}",
+                "description": f"Lumen Skincare Recovery for {checkout_id}",
                 "reference_id": checkout_id,
             }
-            res = rzp_client.payment_link.create(link_data)
-            return res.get("short_url", f"https://payment.lumen-skincare.com/checkout/{checkout_id}")
+            res = client.payment_link.create(link_data)
+            short_url = res.get("short_url")
+            if short_url:
+                return short_url
         except Exception:
-            return f"https://payment.lumen-skincare.com/checkout/{checkout_id}"
-    else:
-        return f"https://payment.lumen-skincare.com/checkout/{checkout_id}"
+            pass
+            
+    return f"https://payment.lumen-skincare.com/checkout/{checkout_id}"
 
 def execute_recovery(checkout_id, diagnosis, checkouts_file=None):
     """

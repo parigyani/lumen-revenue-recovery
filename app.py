@@ -172,15 +172,16 @@ with tab_demo:
         c_data = get_checkout(selected_id)
         
         with st.container(border=True):
-            st.markdown("#### Checkout Context (PII Safe)")
+            st.markdown("#### Internal Checkout Record")
             col_m1, col_m2, col_m3, col_m4 = st.columns(4)
             col_m1.metric("Checkout ID", c_data.get("checkout_id"))
             col_m2.metric("Cart Value", f"₹{c_data.get('cart_value'):,}")
             col_m3.metric("Customer Tier", c_data.get("customer_tier", "standard").upper())
             col_m4.metric("Time Abandoned", f"{c_data.get('time_since_abandonment_hours')}h ago")
             
-            with st.expander("View PII-Safe Telemetry JSON", expanded=False):
+            with st.expander("View Internal Operational Record (App State)", expanded=False):
                 st.json(c_data, expanded=True)
+                st.caption("ℹ️ **Operational Context:** Used internally for UI rendering and audit logging. `customer_id` and `checkout_id` remain in app state for tracking.")
                 
         st.divider()
         col_diag, col_exec = st.columns(2)
@@ -188,7 +189,19 @@ with tab_demo:
         with col_diag:
             with st.container(border=True):
                 st.markdown("#### 1. AI Behavioral Diagnosis")
-                st.caption("Submits anonymized behavioral signals to Gemini for classification.")
+                st.caption("Direct personal identifiers are stripped before behavioral context is sent to the AI.")
+                
+                with st.expander("🔍 View Privacy-Sanitized AI Payload (Sent to Gemini)", expanded=False):
+                    sanitized_payload = {
+                        "cart_value": c_data.get("cart_value"),
+                        "items": c_data.get("items"),
+                        "payment_attempt_status": c_data.get("payment_attempt_status"),
+                        "failure_reason_raw": c_data.get("failure_reason_raw"),
+                        "time_since_abandonment_hours": c_data.get("time_since_abandonment_hours"),
+                        "customer_tier": c_data.get("customer_tier")
+                    }
+                    st.json(sanitized_payload, expanded=True)
+                    st.caption("🔒 **Privacy Guarantee:** `customer_id`, `checkout_id`, names, emails, phones, and payment IDs are strictly excluded from the Gemini API prompt.")
                 
                 if st.button("Run AI Diagnosis", type="primary"):
                     with st.spinner("Submitting telemetry to Gemini..."):

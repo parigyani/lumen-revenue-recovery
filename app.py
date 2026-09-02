@@ -89,9 +89,16 @@ with tab_batch:
     st.subheader("Batch Revenue Recovery Report")
     st.caption("Overview of automated recovery performance, financial yield, and safety guardrails across 60 checkouts.")
     
-    if st.button("Run Batch (60 checkouts)", type="primary"):
-        with st.spinner("Running batch pipeline across 60 checkouts..."):
-            report = run_batch_n_times(force_fallback=True)
+    col_btn, col_chk = st.columns([1, 2])
+    with col_chk:
+        use_real_ai = st.checkbox("⚡ Use Real Gemini AI API Calls (takes ~3 mins on free tier due to 5 RPM rate limits)", value=False)
+    with col_btn:
+        run_clicked = st.button("Run Batch (60 checkouts)", type="primary")
+
+    if run_clicked:
+        msg = "Running live Gemini AI diagnosis across checkouts..." if use_real_ai else "Running fast batch pipeline..."
+        with st.spinner(msg):
+            report = run_batch_n_times(force_fallback=not use_real_ai)
             st.success("Batch execution completed successfully!")
     else:
         report_path = os.path.join(os.path.dirname(__file__), "batch_report.json")

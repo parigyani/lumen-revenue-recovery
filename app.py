@@ -91,6 +91,54 @@ with tab_batch:
     st.subheader("Batch Revenue Recovery Report")
     st.caption("Overview of REVORA automated recovery performance, financial yield, and safety guardrails across Lumen Skincare checkouts.")
     
+    with st.container(border=True):
+        st.markdown("##### 🛡️ REVORA Bounded Recovery Workflow & Guardrail Architecture")
+        st.caption("AI diagnoses intent → Deterministic guardrails validate → Controlled execution → Immutable audit trail.")
+        
+        w1, w2, w3, w4, w5, w6, w7, w8 = st.columns(8)
+        with w1:
+            st.markdown("💰 **1. At-Risk**")
+            st.caption("Abandoned Carts")
+        with w2:
+            st.markdown("🤖 **2. AI Diagnosis**")
+            st.caption("Gemini Intent")
+        with w3:
+            st.markdown("⚖️ **3. Confidence**")
+            st.caption("<55% Fallback")
+        with w4:
+            st.markdown("🛑 **4. Stopping Rules**")
+            st.caption("24h Cooldown")
+        with w5:
+            st.markdown("👤 **5. Human Escalation**")
+            st.caption("Ambiguous Cases")
+        with w6:
+            st.markdown("🔄 **6. Live Re-Check**")
+            st.caption("State Verified")
+        with w7:
+            st.markdown("⚡ **7. Execution**")
+            st.caption("Razorpay Links")
+        with w8:
+            st.markdown("📜 **8. Audit Trail**")
+            st.caption("Immutable Log")
+            
+        with st.expander("🔍 View REVORA Safety & Governance Matrix (6 Implemented Guardrails)", expanded=False):
+            g1, g2, g3 = st.columns(3)
+            with g1:
+                st.markdown("🎯 **1. AI Confidence Threshold (<55%)**")
+                st.caption("Diagnoses with <55% confidence are overridden to `unknown` and routed to human support.")
+                st.markdown("👤 **2. Human Authorization Routing**")
+                st.caption("High-value or ambiguous checkout signals trigger human escalation instead of automated outreach.")
+            with g2:
+                st.markdown("🛑 **3. Stopping Rules & 24h Cooldown**")
+                st.caption("Enforces max contact attempt caps and 24-hour cooldown locks to prevent customer harassment.")
+                st.markdown("🔄 **4. Pre-Execution Live Re-Check**")
+                st.caption("Queries live DB immediately before dispatching to catch external payments and abort execution.")
+            with g3:
+                st.markdown("🛡️ **5. FileLock Mutex Concurrency**")
+                st.caption("Serializes state writes using `FileLock` process locks to prevent race conditions and double contacts.")
+                st.markdown("📜 **6. Append-Only Audit Logging**")
+                st.caption("Records every AI payload, guardrail check, skip event, and Razorpay link dispatch to `audit_log.json`.")
+    
     col_btn, col_chk = st.columns([1, 2])
     with col_chk:
         use_real_ai = st.checkbox("⚡ Use Real Gemini AI API Calls (takes ~3 mins on free tier due to 5 RPM rate limits)", value=False)

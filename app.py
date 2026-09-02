@@ -93,7 +93,7 @@ with tab_batch:
     with col_chk:
         use_real_ai = st.checkbox("⚡ Use Real Gemini AI API Calls (takes ~3 mins on free tier due to 5 RPM rate limits)", value=False)
     with col_btn:
-        run_clicked = st.button("Run Batch (60 checkouts)", type="primary")
+        run_clicked = st.button("Run Batch (5 checkouts)", type="primary")
 
     if run_clicked:
         msg = "Running live Gemini AI diagnosis across checkouts..." if use_real_ai else "Running fast batch pipeline..."
@@ -242,7 +242,12 @@ with tab_demo:
                             st.code(res.get("message"), language="text")
                             
                         if res.get("link"):
-                            st.link_button("💳 Open Generated Razorpay Payment Link", res.get("link"))
+                            link_url = res.get("link", "")
+                    if "rzp.io" in link_url:
+                        st.link_button("💳 Open Live Razorpay Payment Link", link_url)
+                    else:
+                        st.info(f"💳 **Generated Payment Link:** `{link_url}`")
+                        st.caption("*(Simulated link generated — provide live Razorpay API keys in `.env` to create real rzp.io checkout pages).*")
 
 # ==============================================================================
 # TAB 3: AUDIT TRAIL
@@ -282,7 +287,7 @@ with tab_rec:
     st.subheader("B2B Overdue Receivables Extension")
     st.caption("Demonstrating architecture generalization to B2B receivables recovery and promise-to-pay tracking.")
     
-    if st.button("Run Receivables Batch (15 Invoices)", type="primary"):
+    if st.button("Run Receivables Batch (3 Invoices)", type="primary"):
         with st.spinner("Processing B2B receivables pipeline..."):
             rec_report = run_receivables_batch(force_fallback=True)
             st.success("Receivables batch completed successfully!")

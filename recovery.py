@@ -31,11 +31,11 @@ def generate_payment_link(checkout_id, amount, discount_pct=0):
                 "reference_id": checkout_id,
             }
             res = rzp_client.payment_link.create(link_data)
-            return res.get("short_url", f"https://rzp.io/l/simulated-{checkout_id}")
+            return res.get("short_url", f"https://payment.lumen-skincare.com/checkout/{checkout_id}")
         except Exception:
-            return f"https://rzp.io/l/simulated-{checkout_id}"
+            return f"https://payment.lumen-skincare.com/checkout/{checkout_id}"
     else:
-        return f"https://rzp.io/l/simulated-{checkout_id}"
+        return f"https://payment.lumen-skincare.com/checkout/{checkout_id}"
 
 def execute_recovery(checkout_id, diagnosis, checkouts_file=None):
     """

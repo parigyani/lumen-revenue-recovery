@@ -1,5 +1,5 @@
-# Lumen Skincare - AI Revenue Recovery Agent
-**(Razorpay AI Buildathon, Track 03)**
+# REVORA — AI Revenue Recovery Engine
+*Demonstration Client:* **Lumen Skincare** | *(Razorpay AI Buildathon, Track 03)*
 
 ## Overview
 An intelligent revenue recovery engine that uses AI exclusively for diagnosing the reason behind cart abandonment, while strictly relying on deterministic Python logic for all execution, routing, and decision-making. 

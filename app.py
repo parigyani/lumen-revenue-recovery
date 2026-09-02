@@ -11,7 +11,7 @@ from audit import get_audit_log
 
 # ------------------ PAGE CONFIG ------------------
 st.set_page_config(
-    page_title="Lumen Revenue Recovery",
+    page_title="REVORA — AI Revenue Recovery Engine",
     page_icon="✨",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -19,7 +19,7 @@ st.set_page_config(
 
 # ------------------ SIDEBAR CONTROL PANEL ------------------
 with st.sidebar:
-    st.title("⚙️ Control Panel")
+    st.title("⚡ REVORA Control Panel")
     
     with st.expander("API & Model Configuration", expanded=False):
         st.text_input(
@@ -63,7 +63,7 @@ with st.sidebar:
         
     st.divider()
     st.markdown("""
-    **Core System Architecture:**
+    **REVORA Architecture:**
     - 🤖 AI Behavioral Diagnosis (Gemini)
     - ⚡ Deterministic Python Recovery Routing
     - 🛡️ FileLock Mutex Concurrency Safety
@@ -71,8 +71,10 @@ with st.sidebar:
     """)
 
 # ------------------ HEADER ------------------
-st.title("✨ Lumen Skincare — AI Revenue Recovery Engine")
-st.caption("Autonomous Revenue Recovery & Collections Agent | Track 03: Razorpay AI Buildathon")
+st.title("⚡ REVORA")
+st.markdown("##### **AI Revenue Recovery Engine**")
+st.caption("🏢 *Demonstration Environment:* **Lumen Skincare** | Track 03: Razorpay AI Buildathon")
+st.divider()
 
 # ------------------ MAIN TABS ------------------
 tab_batch, tab_demo, tab_audit, tab_rec = st.tabs([
@@ -87,7 +89,7 @@ tab_batch, tab_demo, tab_audit, tab_rec = st.tabs([
 # ==============================================================================
 with tab_batch:
     st.subheader("Batch Revenue Recovery Report")
-    st.caption("Overview of automated recovery performance, financial yield, and safety guardrails across 60 checkouts.")
+    st.caption("Overview of REVORA automated recovery performance, financial yield, and safety guardrails across Lumen Skincare checkouts.")
     
     col_btn, col_chk = st.columns([1, 2])
     with col_chk:
@@ -154,8 +156,8 @@ with tab_batch:
 # TAB 2: LIVE DEMO
 # ==============================================================================
 with tab_demo:
-    st.subheader("Live Interactive Demo")
-    st.caption("Select an abandoned checkout record to simulate AI diagnosis and deterministic recovery execution.")
+    st.subheader("Live Interactive Demo — Lumen Skincare Recovery")
+    st.caption("Select an abandoned checkout record from Lumen Skincare to simulate REVORA AI diagnosis and deterministic recovery execution.")
     
     checkouts = load_checkouts()
     checkout_options = {
@@ -253,8 +255,8 @@ with tab_demo:
 # TAB 3: AUDIT TRAIL
 # ==============================================================================
 with tab_audit:
-    st.subheader("Audit Trail")
-    st.caption("Immutable, structured log of every diagnostic classification, routing execution, and guardrail decision.")
+    st.subheader("REVORA System Audit Trail")
+    st.caption("Immutable, structured log of every REVORA diagnostic classification, routing execution, and guardrail decision.")
     
     logs = get_audit_log()
     if logs:
@@ -285,7 +287,7 @@ with tab_audit:
 # ==============================================================================
 with tab_rec:
     st.subheader("B2B Overdue Receivables Extension")
-    st.caption("Demonstrating architecture generalization to B2B receivables recovery and promise-to-pay tracking.")
+    st.caption("Demonstrating REVORA architecture generalization to B2B receivables recovery and promise-to-pay tracking for Lumen Skincare.")
     
     if st.button("Run Receivables Batch (3 Invoices)", type="primary"):
         with st.spinner("Processing B2B receivables pipeline..."):

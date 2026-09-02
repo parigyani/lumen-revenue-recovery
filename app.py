@@ -243,11 +243,11 @@ with tab_demo:
                             
                         if res.get("link"):
                             link_url = res.get("link", "")
-                    if "rzp.io" in link_url:
-                        st.link_button("💳 Open Live Razorpay Payment Link", link_url)
-                    else:
-                        st.info(f"💳 **Generated Payment Link:** `{link_url}`")
-                        st.caption("*(Simulated link generated — provide live Razorpay API keys in `.env` to create real rzp.io checkout pages).*")
+                            if "rzp.io" in link_url:
+                                st.link_button("💳 Open Live Razorpay Payment Link", link_url)
+                            else:
+                                st.info(f"💳 **Generated Payment Link:** `{link_url}`")
+                                st.caption("*(Simulated link generated — provide live Razorpay API keys in `.env` to create real rzp.io checkout pages).*")
 
 # ==============================================================================
 # TAB 3: AUDIT TRAIL

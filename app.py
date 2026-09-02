@@ -91,7 +91,7 @@ with tab_batch:
     
     if st.button("Run Batch (60 checkouts)", type="primary"):
         with st.spinner("Running batch pipeline across 60 checkouts..."):
-            report = run_batch_n_times()
+            report = run_batch_n_times(force_fallback=True)
             st.success("Batch execution completed successfully!")
     else:
         report_path = os.path.join(os.path.dirname(__file__), "batch_report.json")

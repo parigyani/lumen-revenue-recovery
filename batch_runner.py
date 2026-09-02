@@ -27,7 +27,7 @@ from recovery import execute_recovery
 
 REPORT_FILE = os.path.join(os.path.dirname(__file__), "batch_report.json")
 
-def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18):
+def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18, force_fallback=False):
     verify_cache_integrity()
     report = {
         "total_checkouts": len(checkouts),
@@ -59,7 +59,7 @@ def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18)
         report["eligible_for_recovery"] += 1
         
         # Diagnose
-        is_quota_reserved = False
+        is_quota_reserved = force_fallback
         if record_metrics and report.get("ai_calls_succeeded", 0) >= max_real_ai_calls:
             is_quota_reserved = True
         diagnosis = diagnose(c, force_fallback=is_quota_reserved)
@@ -160,19 +160,19 @@ def run_single_batch_pass(checkouts, record_metrics=False, max_real_ai_calls=18)
             
     return report
 
-def run_batch_n_times(n=5):
+def run_batch_n_times(n=5, force_fallback=False):
     db_file = os.path.join(os.path.dirname(__file__), "data", "checkouts.json")
     backup_file = db_file + ".bak"
     shutil.copy(db_file, backup_file)
     
     checkouts = load_checkouts()
-    primary_report = run_single_batch_pass(checkouts, record_metrics=True)
+    primary_report = run_single_batch_pass(checkouts, record_metrics=True, force_fallback=force_fallback)
     rates = [primary_report["recovery_rate_pct"]]
     
     for i in range(n - 1):
         shutil.copy(backup_file, db_file)
         fresh_checkouts = load_checkouts()
-        run_report = run_single_batch_pass(fresh_checkouts, record_metrics=False)
+        run_report = run_single_batch_pass(fresh_checkouts, record_metrics=False, force_fallback=force_fallback)
         rates.append(run_report["recovery_rate_pct"])
         
     shutil.copy(backup_file, db_file)

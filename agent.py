@@ -40,6 +40,59 @@ def classify_baseline(checkout):
     else:
         return "unknown"
 
+
+def validate_and_clamp(result, is_receivables=False):
+    """Validates schema fields, checks confidence threshold (<0.55), and clamps interventions."""
+    if not isinstance(result, dict):
+        raise ValueError("AI response must be a JSON object")
+
+    if not is_receivables:
+        if "reason" not in result or "recommended_intervention" not in result:
+            raise ValueError("Missing required schema fields in checkout diagnosis")
+        
+        valid_reasons = ["payment_failed", "price_hesitation", "distracted", "unknown"]
+        if result.get("reason") not in valid_reasons:
+            raise ValueError(f"Invalid checkout diagnosis category: {result.get('reason')}")
+            
+        try:
+            conf = float(result.get("confidence", 1.0))
+        except (TypeError, ValueError):
+            conf = 0.0
+            
+        if conf < 0.55:
+            result["reason"] = "unknown"
+            result["recommended_intervention"] = "escalate_human"
+            result["reasoning_short"] = "Confidence below threshold (0.55), escalated."
+        else:
+            valid_interventions = ["payment_retry_link", "discount_code", "reminder_nudge", "escalate_human"]
+            if result.get("recommended_intervention") not in valid_interventions:
+                result["recommended_intervention"] = "escalate_human"
+                
+    else:
+        if "reason" not in result or "recommended_action" not in result:
+            raise ValueError("Missing required schema fields in receivables diagnosis")
+            
+        valid_reasons = ["payment_capacity_issue", "dispute_unresolved", "awaiting_approval", "unknown"]
+        if result.get("reason") not in valid_reasons:
+            raise ValueError(f"Invalid receivables diagnosis category: {result.get('reason')}")
+            
+        try:
+            conf = float(result.get("confidence", 1.0))
+        except (TypeError, ValueError):
+            conf = 0.0
+            
+        if conf < 0.55:
+            result["reason"] = "unknown"
+            result["recommended_action"] = "escalate_human"
+            result["reasoning_short"] = "Confidence below threshold (0.55), escalated."
+        else:
+            valid_actions = ["send_reminder", "escalate_to_collections", "request_promise_to_pay", "escalate_human"]
+            if result.get("recommended_action") not in valid_actions:
+                result["recommended_action"] = "escalate_human"
+                
+    return result
+
+
 def diagnose(checkout, force_fallback=False, api_key=None, model_name=None):
     checkout_id = checkout["checkout_id"]
     cache = load_cache()
@@ -60,7 +113,7 @@ def diagnose(checkout, force_fallback=False, api_key=None, model_name=None):
         "confidence": 0.6,
         "recommended_intervention": baseline_intervention_map.get(baseline_reason, "escalate_human"),
         "discount_pct": 10 if baseline_reason == "price_hesitation" else 0,
-        "reasoning_short": "AI unavailable (Rate Limit), using rule-based baseline.",
+        "reasoning_short": "AI unavailable, using rule-based baseline.",
         "input_tokens": 0,
         "output_tokens": 0,
         "is_fallback": True
@@ -74,24 +127,23 @@ def diagnose(checkout, force_fallback=False, api_key=None, model_name=None):
         return fallback
 
     active_api_key = api_key or os.getenv("GEMINI_API_KEY")
-    if not active_api_key:
-        fallback['fallback_reason'] = 'api_error'
-        print("Warning: GEMINI_API_KEY not found in .env or override, returning fallback.")
-        return fallback
-
     active_model_name = model_name or os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-    client = genai.Client(api_key=active_api_key)
     
-    safe_data = {
-        "cart_value": checkout.get("cart_value"),
-        "items": checkout.get("items"),
-        "payment_attempt_status": checkout.get("payment_attempt_status"),
-        "failure_reason_raw": checkout.get("failure_reason_raw"),
-        "time_since_abandonment_hours": checkout.get("time_since_abandonment_hours"),
-        "customer_tier": checkout.get("customer_tier")
-    }
+    gemini_failed = False
+    
+    # 1. PRIMARY AI DIAGNOSIS: Gemini API
+    if active_api_key:
+        client = genai.Client(api_key=active_api_key)
+        safe_data = {
+            "cart_value": checkout.get("cart_value"),
+            "items": checkout.get("items"),
+            "payment_attempt_status": checkout.get("payment_attempt_status"),
+            "failure_reason_raw": checkout.get("failure_reason_raw"),
+            "time_since_abandonment_hours": checkout.get("time_since_abandonment_hours"),
+            "customer_tier": checkout.get("customer_tier")
+        }
 
-    prompt = f"""You are an AI diagnosing abandoned checkouts for Lumen Skincare.
+        prompt = f"""You are an AI diagnosing abandoned checkouts for Lumen Skincare.
 Analyze this checkout data: {json.dumps(safe_data)}
     
 Rules:
@@ -110,60 +162,59 @@ Schema:
   "reasoning_short": "<one sentence>"
 }}
 """
-    
-    
-    
-    retries = 5
-    for attempt in range(retries):
+        retries = 1
+        for attempt in range(retries):
+            try:
+                response = client.models.generate_content(
+                    model=active_model_name,
+                    contents=prompt,
+                )
+
+                raw_text_str = response.text.strip()
+                match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', raw_text_str, re.DOTALL)
+                if match:
+                    json_str = match.group(1)
+                else:
+                    match = re.search(r'(\{.*?\})', raw_text_str, re.DOTALL)
+                    json_str = match.group(1) if match else raw_text_str
+                
+                result = json.loads(json_str.strip())
+                result = validate_and_clamp(result, is_receivables=False)
+
+                result["input_tokens"] = response.usage_metadata.prompt_token_count if response.usage_metadata else 0
+                result["output_tokens"] = response.usage_metadata.candidates_token_count if response.usage_metadata else 0
+                result["is_fallback"] = False
+                
+                cache[checkout_id] = result
+                save_cache(cache)
+                return result
+                
+            except Exception as e:
+                err_str = str(e)
+                print(f"Gemini API Exception for {checkout_id}: {err_str}")
+        
+        gemini_failed = True
+    else:
+        gemini_failed = True
+
+    # 2. SECONDARY AI FALLBACK: Local Ollama Qwen3:4b
+    if gemini_failed:
         try:
-            response = client.models.generate_content(
-                model=active_model_name,
-                contents=prompt,
-            )
-
+            from local_agent import diagnose_local_qwen
+            local_res = diagnose_local_qwen(checkout, timeout=5.0)
+            local_res = validate_and_clamp(local_res, is_receivables=False)
+            local_res["input_tokens"] = 0
+            local_res["output_tokens"] = 0
+            local_res["is_fallback"] = True
+            local_res["fallback_reason"] = "local_model_fallback"
             
-            # 1. Extract JSON using regex to handle surrounding prose/markdown
-            raw_text_str = response.text.strip()
-            match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', raw_text_str, re.DOTALL)
-            if match:
-                json_str = match.group(1)
-            else:
-                match = re.search(r'(\{.*?\})', raw_text_str, re.DOTALL)
-                json_str = match.group(1) if match else raw_text_str
-            
-            result = json.loads(json_str.strip())
-            
-            # 2. Validate required schema fields
-            if not isinstance(result, dict) or "reason" not in result or "recommended_intervention" not in result:
-                raise ValueError("Missing required schema fields in AI response")
-            
-            # 3. Apply confidence threshold guardrail (< 0.55)
-            if result.get("confidence", 1.0) < 0.55:
-                result["reason"] = "unknown"
-                result["recommended_intervention"] = "escalate_human"
-                result["reasoning_short"] = "Confidence below threshold (0.55), escalated."
-            
-            # 4. Clamp invalid interventions
-            valid_interventions = ["payment_retry_link", "discount_code", "reminder_nudge", "escalate_human"]
-            if result.get("recommended_intervention") not in valid_interventions:
-                result["recommended_intervention"] = "escalate_human"
-
-            result["input_tokens"] = response.usage_metadata.prompt_token_count if response.usage_metadata else 0
-            result["output_tokens"] = response.usage_metadata.candidates_token_count if response.usage_metadata else 0
-            result["is_fallback"] = False
-            
-            cache[checkout_id] = result
+            cache[checkout_id] = local_res
             save_cache(cache)
-            return result
-            
-        except Exception as e:
-            err_str = str(e)
-            print(f"Gemini API Exception on attempt {attempt+1}/{retries} for {checkout_id}: {err_str}")
-            sleep_time = 65.0
-            print(f"Rate limited or error. Sleeping {sleep_time:.2f}s before retry...")
-            time.sleep(sleep_time)
-            
-    print(f"Agent error after max retries. Falling back.")
+            return local_res
+        except Exception as local_err:
+            print(f"Local Ollama Qwen model unavailable/failed for {checkout_id}: {local_err}")
+
+    # 3. TERTIARY DETERMINISTIC BASELINE FALLBACK
     fallback['fallback_reason'] = 'api_error'
     cache[checkout_id] = fallback
     save_cache(cache)

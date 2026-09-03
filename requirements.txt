@@ -4,3 +4,4 @@ pandas
 razorpay
 python-dotenv
 filelock
+ollama

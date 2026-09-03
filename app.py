@@ -143,7 +143,7 @@ with tab_batch:
     with col_chk:
         use_real_ai = st.checkbox("⚡ Use Real Gemini AI API Calls (takes ~3 mins on free tier due to 5 RPM rate limits)", value=False)
     with col_btn:
-        run_clicked = st.button("Run Batch (5 checkouts)", type="primary")
+        run_clicked = st.button("Run Batch (20 checkouts)", type="primary")
 
     if run_clicked:
         msg = "Running live Gemini AI diagnosis across checkouts..." if use_real_ai else "Running fast batch pipeline..."

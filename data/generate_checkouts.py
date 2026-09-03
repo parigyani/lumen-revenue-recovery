@@ -2,11 +2,11 @@ import json
 import random
 import os
 
-def generate():
+def generate(num_records=20):
     checkouts = []
     tiers = ["new", "returning", "vip"]
     
-    for i in range(1, 61):
+    for i in range(1, num_records + 1):
         checkout_id = f"chk_{i:04d}"
         customer_id = f"cust_{random.randint(100, 999)}"
         tier = random.choice(tiers)
@@ -61,7 +61,7 @@ def generate():
         checkouts.append(record)
         
     # Seed ~5 records as already_completed_elsewhere = true
-    completed_indices = random.sample(range(60), 5)
+    completed_indices = random.sample(range(num_records), min(2, num_records))
     for idx in completed_indices:
         checkouts[idx]["already_completed_elsewhere"] = True
         

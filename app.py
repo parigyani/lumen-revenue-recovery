@@ -12,14 +12,14 @@ from audit import get_audit_log
 # ------------------ PAGE CONFIG ------------------
 st.set_page_config(
     page_title="REVORA — AI Revenue Recovery Engine",
-    page_icon="✨",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ------------------ SIDEBAR CONTROL PANEL ------------------
 with st.sidebar:
-    st.title("⚡ REVORA Control Panel")
+    st.title("REVORA Control Panel")
     
     with st.expander("API & Model Configuration", expanded=False):
         st.text_input(
@@ -57,31 +57,31 @@ with st.sidebar:
     active_key_override = st.session_state.get("override_api_key_input", "").strip()
     active_model_disp = st.session_state.get("override_model_input", "").strip() or os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
     if active_key_override:
-        st.caption(f"🔑 **Key Source:** Session Override | **Model:** `{active_model_disp}`")
+        st.caption(f"**Key Source:** Session Override | **Model:** `{active_model_disp}`")
     else:
-        st.caption(f"🔑 **Key Source:** `.env` Default | **Model:** `{active_model_disp}`")
+        st.caption(f"**Key Source:** `.env` Default | **Model:** `{active_model_disp}`")
         
     st.divider()
     st.markdown("""
     **REVORA Architecture:**
-    - 🤖 AI Behavioral Diagnosis (Gemini)
-    - ⚡ Deterministic Python Recovery Routing
-    - 🛡️ FileLock Mutex Concurrency Safety
-    - 📜 Self-Describing Immutable Audit Trail
+    - AI Behavioral Diagnosis (Gemini)
+    - Deterministic Python Recovery Routing
+    - FileLock Mutex Concurrency Safety
+    - Self-Describing Immutable Audit Trail
     """)
 
 # ------------------ HEADER ------------------
-st.title("⚡ REVORA")
+st.title("REVORA")
 st.markdown("##### **AI Revenue Recovery Engine**")
-st.caption("🏢 *Demonstration Environment:* **Lumen Skincare** | Track 03: Razorpay AI Buildathon")
+st.caption("*Demonstration Environment:* **Lumen Skincare** | Track 03: Razorpay AI Buildathon")
 st.divider()
 
 # ------------------ MAIN TABS ------------------
 tab_batch, tab_demo, tab_audit, tab_rec = st.tabs([
-    "📊 Batch Report", 
-    "🔴 Live Interactive Demo", 
-    "📜 Audit Trail", 
-    "🏢 Receivables Extension"
+    "Batch Report", 
+    "Live Interactive Demo", 
+    "Audit Trail", 
+    "Receivables Extension"
 ])
 
 # ==============================================================================
@@ -92,56 +92,56 @@ with tab_batch:
     st.caption("Overview of REVORA automated recovery performance, financial yield, and safety guardrails across Lumen Skincare checkouts.")
     
     with st.container(border=True):
-        st.markdown("##### 🛡️ REVORA Bounded Recovery Workflow & Guardrail Architecture")
+        st.markdown("##### REVORA Bounded Recovery Workflow & Guardrail Architecture")
         st.caption("AI diagnoses intent → Deterministic guardrails validate → Controlled execution → Immutable audit trail.")
         
         w1, w2, w3, w4, w5, w6, w7, w8 = st.columns(8)
         with w1:
-            st.markdown("💰 **1. At-Risk**")
+            st.markdown("**1. At-Risk**")
             st.caption("Abandoned Carts")
         with w2:
-            st.markdown("🤖 **2. AI Diagnosis**")
+            st.markdown("**2. AI Diagnosis**")
             st.caption("Gemini Intent")
         with w3:
-            st.markdown("⚖️ **3. Confidence**")
+            st.markdown("**3. Confidence**")
             st.caption("<55% Fallback")
         with w4:
-            st.markdown("🛑 **4. Stopping Rules**")
+            st.markdown("**4. Stopping Rules**")
             st.caption("24h Cooldown")
         with w5:
-            st.markdown("👤 **5. Human Escalation**")
+            st.markdown("**5. Human Escalation**")
             st.caption("Ambiguous Cases")
         with w6:
-            st.markdown("🔄 **6. Live Re-Check**")
+            st.markdown("**6. Live Re-Check**")
             st.caption("State Verified")
         with w7:
-            st.markdown("⚡ **7. Execution**")
+            st.markdown("**7. Execution**")
             st.caption("Razorpay Links")
         with w8:
-            st.markdown("📜 **8. Audit Trail**")
+            st.markdown("**8. Audit Trail**")
             st.caption("Immutable Log")
             
-        with st.expander("🔍 View REVORA Safety & Governance Matrix (6 Implemented Guardrails)", expanded=False):
+        with st.expander("View REVORA Safety & Governance Matrix (6 Implemented Guardrails)", expanded=False):
             g1, g2, g3 = st.columns(3)
             with g1:
-                st.markdown("🎯 **1. AI Confidence Threshold (<55%)**")
+                st.markdown("**1. AI Confidence Threshold (<55%)**")
                 st.caption("Diagnoses with <55% confidence are overridden to `unknown` and routed to human support.")
-                st.markdown("👤 **2. Human Authorization Routing**")
+                st.markdown("**2. Human Authorization Routing**")
                 st.caption("High-value or ambiguous checkout signals trigger human escalation instead of automated outreach.")
             with g2:
-                st.markdown("🛑 **3. Stopping Rules & 24h Cooldown**")
+                st.markdown("**3. Stopping Rules & 24h Cooldown**")
                 st.caption("Enforces max contact attempt caps and 24-hour cooldown locks to prevent customer harassment.")
-                st.markdown("🔄 **4. Pre-Execution Live Re-Check**")
+                st.markdown("**4. Pre-Execution Live Re-Check**")
                 st.caption("Queries live DB immediately before dispatching to catch external payments and abort execution.")
             with g3:
-                st.markdown("🛡️ **5. FileLock Mutex Concurrency**")
+                st.markdown("**5. FileLock Mutex Concurrency**")
                 st.caption("Serializes state writes using `FileLock` process locks to prevent race conditions and double contacts.")
-                st.markdown("📜 **6. Append-Only Audit Logging**")
+                st.markdown("**6. Append-Only Audit Logging**")
                 st.caption("Records every AI payload, guardrail check, skip event, and Razorpay link dispatch to `audit_log.json`.")
     
     col_btn, col_chk = st.columns([1, 2])
     with col_chk:
-        use_real_ai = st.checkbox("⚡ Use Real Gemini AI API Calls (takes ~3 mins on free tier due to 5 RPM rate limits)", value=False)
+        use_real_ai = st.checkbox("Use Real Gemini AI API Calls (takes ~3 mins on free tier due to 5 RPM rate limits)", value=False)
     with col_btn:
         run_clicked = st.button("Run Batch (20 checkouts)", type="primary")
 
@@ -170,7 +170,7 @@ with tab_batch:
         
         st.divider()
         st.markdown("#### AI Diagnosis & Quota Governance")
-        st.caption("ℹ️ **Quota Governance:** 'Quota Reserved' indicates checkouts intentionally routed to rule-based baseline classification to stay within free-tier API limits.")
+        st.caption("**Quota Governance:** 'Quota Reserved' indicates checkouts intentionally routed to rule-based baseline classification to stay within free-tier API limits.")
         
         c5, c6, c7 = st.columns(3)
         c5.metric("AI Calls Succeeded", report.get("ai_calls_succeeded", 0))
@@ -193,7 +193,7 @@ with tab_batch:
             st.markdown("#### Safety Guardrails & Stopping Rules")
             skipped_completed = report.get("skipped_already_completed", 0)
             st.success(f"✅ **Live Re-Check Guardrail:** Successfully prevented **{skipped_completed}** duplicate contacts to customers who already completed payment elsewhere.")
-            st.info(f"🛑 **Stopping Rules Triggered:** Skipped **{report.get('skipped_stopping_rules', 0)}** checkouts due to max contact attempt caps (3) or active 24h cooldowns.")
+            st.info(f"**Stopping Rules Triggered:** Skipped **{report.get('skipped_stopping_rules', 0)}** checkouts due to max contact attempt caps (3) or active 24h cooldowns.")
             
         with st.expander("View Per-Checkout Detail Table", expanded=False):
             results_df = pd.DataFrame(report.get("per_checkout_results", []))
@@ -229,7 +229,7 @@ with tab_demo:
             
             with st.expander("View Internal Operational Record (App State)", expanded=False):
                 st.json(c_data, expanded=True)
-                st.caption("ℹ️ **Operational Context:** Used internally for UI rendering and audit logging. `customer_id` and `checkout_id` remain in app state for tracking.")
+                st.caption("**Operational Context:** Used internally for UI rendering and audit logging. `customer_id` and `checkout_id` remain in app state for tracking.")
                 
         st.divider()
         col_diag, col_exec = st.columns(2)
@@ -239,7 +239,7 @@ with tab_demo:
                 st.markdown("#### 1. AI Behavioral Diagnosis")
                 st.caption("Direct personal identifiers are stripped before behavioral context is sent to the AI.")
                 
-                with st.expander("🔍 View Privacy-Sanitized AI Payload (Sent to Gemini)", expanded=False):
+                with st.expander("View Privacy-Sanitized AI Payload (Sent to Gemini)", expanded=False):
                     sanitized_payload = {
                         "cart_value": c_data.get("cart_value"),
                         "items": c_data.get("items"),
@@ -249,7 +249,7 @@ with tab_demo:
                         "customer_tier": c_data.get("customer_tier")
                     }
                     st.json(sanitized_payload, expanded=True)
-                    st.caption("🔒 **Privacy Guarantee:** `customer_id`, `checkout_id`, names, emails, phones, and payment IDs are strictly excluded from the Gemini API prompt.")
+                    st.caption("**Privacy Guarantee:** `customer_id`, `checkout_id`, names, emails, phones, and payment IDs are strictly excluded from the Gemini API prompt.")
                 
                 if st.button("Run AI Diagnosis", type="primary"):
                     with st.spinner("Submitting telemetry to Gemini..."):
@@ -267,11 +267,11 @@ with tab_demo:
                     st.progress(conf)
                     
                     if conf >= 0.70:
-                        st.caption("🟢 **High Confidence:** AI diagnosis accepted directly.")
+                        st.caption("**High Confidence:** AI diagnosis accepted directly.")
                     elif conf >= 0.55:
-                        st.caption("🟡 **Moderate Confidence:** AI diagnosis accepted with standard rules.")
+                        st.caption("**Moderate Confidence:** AI diagnosis accepted with standard rules.")
                     else:
-                        st.caption("🔴 **Low Confidence (<55%):** Automatically overridden to Human Escalation.")
+                        st.caption("**Low Confidence (<55%):** Automatically overridden to Human Escalation.")
                         
                     st.markdown(f"**Recommended Intervention:** `{diag.get('recommended_intervention')}`")
                     st.markdown(f"**AI Rationale:** *\"{diag.get('reasoning_short')}\"*")
@@ -292,13 +292,13 @@ with tab_demo:
                         st.divider()
                         status = res.get("status")
                         if status == "recovered":
-                            st.success(f"🎉 **Status:** Recovered (₹{res.get('recovered_amount', 0):,})")
+                            st.success(f"**Status:** Recovered (₹{res.get('recovered_amount', 0):,})")
                         elif status == "contacted":
-                            st.info("📩 **Status:** Contacted (Awaiting Customer Action)")
+                            st.info("**Status:** Contacted (Awaiting Customer Action)")
                         elif status == "escalated":
-                            st.warning("⚠️ **Status:** Escalated to Human Agent")
+                            st.warning("**Status:** Escalated to Human Agent")
                         elif status == "skipped":
-                            st.error(f"🛑 **Status:** Skipped ({res.get('reason')})")
+                            st.error(f"**Status:** Skipped ({res.get('reason')})")
                             
                         if res.get("message"):
                             st.markdown("**Dispatched Communication:**")
@@ -307,9 +307,9 @@ with tab_demo:
                         if res.get("link"):
                             link_url = res.get("link", "")
                             if "rzp.io" in link_url:
-                                st.link_button("💳 Open Live Razorpay Payment Link", link_url)
+                                st.link_button("Open Live Razorpay Payment Link", link_url)
                             else:
-                                st.info(f"💳 **Generated Payment Link:** `{link_url}`")
+                                st.info(f"**Generated Payment Link:** `{link_url}`")
                                 st.caption("*(Simulated link generated — provide live Razorpay API keys in `.env` to create real rzp.io checkout pages).*")
 
 # ==============================================================================
@@ -369,7 +369,7 @@ with tab_rec:
         rc3.metric("Collections Escalations", rec_report.get("escalated_to_collections", 0))
         rc4.metric("Broken Promise Escalations", rec_report.get("broken_promise_escalations", 0))
         
-        st.caption("🎯 **Ground-Truth Baseline Accuracy:** 66.7% (10/15) — misclassifications occur on ambiguous cases without clear broken promise histories.")
+        st.caption("**Ground-Truth Baseline Accuracy:** 66.7% (10/15) — misclassifications occur on ambiguous cases without clear broken promise histories.")
         st.warning("📌 **Promise-to-Pay Stopping Rule Active:** Automatically escalates to human review if 2+ broken promises are recorded, halting automated contacts.")
         
         st.divider()

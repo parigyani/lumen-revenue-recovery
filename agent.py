@@ -197,22 +197,8 @@ Schema:
     else:
         gemini_failed = True
 
-    # 2. SECONDARY AI FALLBACK: Local Ollama Qwen3:4b
-    if gemini_failed:
-        try:
-            from local_agent import diagnose_local_qwen
-            local_res = diagnose_local_qwen(checkout, timeout=5.0)
-            local_res = validate_and_clamp(local_res, is_receivables=False)
-            local_res["input_tokens"] = 0
-            local_res["output_tokens"] = 0
-            local_res["is_fallback"] = True
-            local_res["fallback_reason"] = "local_model_fallback"
-            
-            cache[checkout_id] = local_res
-            save_cache(cache)
-            return local_res
-        except Exception as local_err:
-            print(f"Local Ollama Qwen model unavailable/failed for {checkout_id}: {local_err}")
+    # 2. LOCAL OLLAMA DISABLED FOR SUBMISSION (Falls directly through to Rule-Based Baseline)
+    # To re-enable local Ollama fallback, uncomment local_agent invocation here.
 
     # 3. TERTIARY DETERMINISTIC BASELINE FALLBACK
     fallback['fallback_reason'] = 'api_error'

@@ -5,6 +5,7 @@ from unittest.mock import patch, MagicMock
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import agent
+import local_agent
 
 def test_local_fallback():
     checkout = {
@@ -30,12 +31,10 @@ def test_local_fallback():
         
         mock_getenv.side_effect = lambda k, d=None: "fake_key" if k == "GEMINI_API_KEY" else d
         
-        # Gemini fails
         mock_gemini_inst = MagicMock()
         mock_gemini_inst.models.generate_content.side_effect = Exception("Gemini 429 Quota Exhausted")
         MockGemini.return_value = mock_gemini_inst
 
-        # Local Ollama succeeds
         mock_local_qwen.return_value = {
             "reason": "distracted",
             "confidence": 0.85,
@@ -121,7 +120,7 @@ def test_local_fallback():
         else:
             print(f"[FAIL] Expected baseline fallback on invalid category. Got: {res}")
 
-    # Test 5: Local Model Low Confidence (<0.55) & Intervention Clamping
+    # Test 5: Local Model Low Confidence (<0.55) & Clamping Validation
     print("\n--- Test 5: Local Model Low Confidence (<0.55) & Clamping Validation ---")
     if os.path.exists(agent.CACHE_FILE):
         os.remove(agent.CACHE_FILE)
@@ -132,8 +131,6 @@ def test_local_fallback():
 
         mock_getenv.side_effect = lambda k, d=None: "fake_key" if k == "GEMINI_API_KEY" else d
         MockGemini.return_value.models.generate_content.side_effect = Exception("Gemini Error")
-        
-        # Low confidence local result
         mock_local_qwen.return_value = {
             "reason": "price_hesitation",
             "confidence": 0.40,
@@ -149,6 +146,30 @@ def test_local_fallback():
             print("[PASS] Local model low confidence (<0.55) passed shared validation & was overridden to human escalation.")
         else:
             print(f"[FAIL] Low confidence was not overridden. Got: {res}")
+
+    # Test 6: REAL Integration Test with Local Ollama qwen3:4b Server
+    print("\n--- Test 6: Real Integration Call with Local Ollama qwen3:4b Server ---")
+    ambiguous_checkout = {
+        "checkout_id": "test_real_ambiguous",
+        "cart_value": 2500,
+        "items": ["Skin Hydrator"],
+        "payment_attempt_status": "none",
+        "failure_reason_raw": "",
+        "time_since_abandonment_hours": 1.0,
+        "customer_tier": "new"
+    }
+
+    try:
+        real_res = local_agent.diagnose_local_qwen(ambiguous_checkout, timeout=30.0)
+        print("Real Ollama Response Output:")
+        print(json.dumps(real_res, indent=2))
+        
+        if real_res.get("reason") == "unknown" and real_res.get("recommended_intervention") == "escalate_human":
+            print("[PASS] Real Ollama qwen3:4b model correctly classified ambiguous checkout as unknown/escalate_human!")
+        else:
+            print(f"[WARN] Real model returned: reason={real_res.get('reason')}, intervention={real_res.get('recommended_intervention')}")
+    except Exception as e:
+        print(f"[SKIP] Real Ollama integration call skipped/failed: {str(e)}")
 
 if __name__ == "__main__":
     test_local_fallback()

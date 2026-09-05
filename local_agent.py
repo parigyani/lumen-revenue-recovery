@@ -27,8 +27,8 @@ CHECKOUT_SCHEMA = {
     "required": ["reason", "confidence", "recommended_intervention", "discount_pct", "reasoning_short"]
 }
 
-def diagnose_local_qwen(checkout, timeout=5.0):
-    """Diagnoses an abandoned checkout using local Ollama Qwen3:4b model.
+def diagnose_local_qwen(checkout, timeout=10.0):
+    """Diagnoses an abandoned checkout using local Ollama Qwen3:4b model conservatively.
     Returns parsed dictionary or raises Exception on failure/timeout.
     """
     safe_data = {
@@ -41,20 +41,15 @@ def diagnose_local_qwen(checkout, timeout=5.0):
     }
 
     prompt = (
-        "Diagnose this abandoned checkout for Lumen Skincare.\n"
+        "Diagnose this abandoned checkout for Lumen Skincare conservatively.\n"
         f"Data: {json.dumps(safe_data)}\n\n"
-        "Decision Rules:\n"
-        "- payment_attempt_status == 'failed' -> reason='payment_failed', recommended_intervention='payment_retry_link'\n"
-        "- time_since_abandonment_hours > 24 + no payment attempt -> reason='price_hesitation', recommended_intervention='discount_code'\n"
-        "- time_since_abandonment_hours < 12 + no failure signal -> reason='distracted', recommended_intervention='reminder_nudge'\n"
-        "- ambiguous signals -> reason='unknown', recommended_intervention='escalate_human'\n\n"
-        "Strict Instructions:\n"
-        "- Use only explicitly provided information.\n"
-        "- Never infer missing reasons.\n"
-        "- Follow explicit decision rules.\n"
-        "- Return only the structured result.\n"
-        "- Do not provide explanations outside the required reasoning field.\n"
-        "- Do not expose thinking."
+        "Strict Classification Rules:\n"
+        "1. If payment_attempt_status == 'failed' -> reason='payment_failed', recommended_intervention='payment_retry_link'\n"
+        "2. Return reason='price_hesitation' (recommended_intervention='discount_code') ONLY when there is explicit evidence related to price (e.g. price query or price failure notes). Do NOT infer price hesitation merely from cart value, abandonment duration, or lack of payment attempt.\n"
+        "3. Return reason='distracted' (recommended_intervention='reminder_nudge') ONLY when there is explicit evidence of interruption or inactivity beyond simply knowing that a checkout was abandoned. Do NOT treat time_since_abandonment_hours alone as sufficient evidence.\n"
+        "4. Otherwise, for ambiguous data or lack of explicit evidence -> reason='unknown', recommended_intervention='escalate_human'\n"
+        "5. Never infer missing reasons.\n\n"
+        "Return ONLY the structured JSON matching schema."
     )
 
     client = ollama.Client(timeout=timeout)

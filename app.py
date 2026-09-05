@@ -41,17 +41,17 @@ with st.sidebar:
             test_model = st.session_state.get("override_model_input", "").strip() or env_default_model
             
             if not test_key:
-                st.error("❌ No API key available in session override or .env")
+                st.error("No API key available in session override or .env")
             else:
                 try:
                     test_client = genai.Client(api_key=test_key)
                     test_res = test_client.models.generate_content(model=test_model, contents="say OK")
                     if test_res.text:
-                        st.success("✅ Key is valid, quota available")
+                        st.success("Key is valid, quota available")
                     else:
-                        st.error("❌ Empty response from model")
+                        st.error("Empty response from model")
                 except Exception as e:
-                    st.error(f"❌ {str(e)}")
+                    st.error(f"{str(e)}")
 
     # Active key source indicator
     active_key_override = st.session_state.get("override_api_key_input", "").strip()
@@ -192,7 +192,7 @@ with tab_batch:
         with col_text:
             st.markdown("#### Safety Guardrails & Stopping Rules")
             skipped_completed = report.get("skipped_already_completed", 0)
-            st.success(f"✅ **Live Re-Check Guardrail:** Successfully prevented **{skipped_completed}** duplicate contacts to customers who already completed payment elsewhere.")
+            st.success(f"**Live Re-Check Guardrail:** Successfully prevented **{skipped_completed}** duplicate contacts to customers who already completed payment elsewhere.")
             st.info(f"**Stopping Rules Triggered:** Skipped **{report.get('skipped_stopping_rules', 0)}** checkouts due to max contact attempt caps (3) or active 24h cooldowns.")
             
         with st.expander("View Per-Checkout Detail Table", expanded=False):
@@ -370,7 +370,7 @@ with tab_rec:
         rc4.metric("Broken Promise Escalations", rec_report.get("broken_promise_escalations", 0))
         
         st.caption("**Ground-Truth Baseline Accuracy:** 66.7% (10/15) — misclassifications occur on ambiguous cases without clear broken promise histories.")
-        st.warning("📌 **Promise-to-Pay Stopping Rule Active:** Automatically escalates to human review if 2+ broken promises are recorded, halting automated contacts.")
+        st.warning("**Promise-to-Pay Stopping Rule Active:** Automatically escalates to human review if 2+ broken promises are recorded, halting automated contacts.")
         
         st.divider()
         st.subheader("Invoice Processing Breakdown")

@@ -193,7 +193,7 @@ Schema:
                 err_str = str(e)
                 print(f"Gemini API Exception for {checkout_id} (Attempt {attempt+1}/{retries}): {err_str}")
                 if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                    time.sleep(13.0)
+                    time.sleep(5.0)
                 else:
                     time.sleep(1.0)
         

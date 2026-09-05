@@ -148,7 +148,7 @@ with tab_batch:
     if run_clicked:
         msg = "Running live Gemini AI diagnosis across checkouts..." if use_real_ai else "Running fast batch pipeline..."
         with st.spinner(msg):
-            report = run_batch_n_times(force_fallback=not use_real_ai)
+            report = run_batch_n_times(n=1 if use_real_ai else 5, force_fallback=not use_real_ai)
             st.success("Batch execution completed successfully!")
     else:
         report_path = os.path.join(os.path.dirname(__file__), "batch_report.json")

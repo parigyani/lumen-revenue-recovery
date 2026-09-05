@@ -162,7 +162,7 @@ Schema:
   "reasoning_short": "<one sentence>"
 }}
 """
-        retries = 1
+        retries = 3
         for attempt in range(retries):
             try:
                 response = client.models.generate_content(
@@ -191,7 +191,11 @@ Schema:
                 
             except Exception as e:
                 err_str = str(e)
-                print(f"Gemini API Exception for {checkout_id}: {err_str}")
+                print(f"Gemini API Exception for {checkout_id} (Attempt {attempt+1}/{retries}): {err_str}")
+                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                    time.sleep(13.0)
+                else:
+                    time.sleep(1.0)
         
         gemini_failed = True
     else:
